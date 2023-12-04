@@ -16,6 +16,7 @@ button_dict = {"main": ("취향 분석 추천", "랜덤 추천"),
 
 
 class SetUI(QDialog):
+
     # Window 양식 설정 method
     # 창 이름(title), 아이콘, (x, y, w, h) 설정
     def setWindow(self, title):
@@ -57,10 +58,10 @@ class SetUI(QDialog):
             print("label_key값 오류")
             return
 
-        # layout 적용
-        self.setLayout(vbox)
+        return vbox
 
     def setLabel(self, label_text):
+        print(label_text)
         label = QLabel(label_text)
         font = label.font()
         font.setPointSize(20)

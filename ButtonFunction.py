@@ -1,9 +1,7 @@
-import random
-import SetUI
-
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QDialog
 from ClassifyPage import ClassifyPage
 from RandomPage import RandomPage
+import random
 
 
 class ButtonFunction(QDialog):
@@ -58,26 +56,9 @@ class ButtonFunction(QDialog):
                                  "border-radius: 5px;")
 
     # proceed 버튼이 눌리면 실행될 method
-    # 현재 layout을 초기화 하고 새 layout 적용하여 다음 질문으로 넘어감
+    # currentIndex를 증가시켜 다음 질문으로 넘어감
     def progressQuestion(self, button_text):
-        # 현재 layout의 모든 widget과 item을 삭제하여 초기화
-        ButtonFunction.clearPage(self)
-        # if button_text == "추천 결과":
-        #     # 결과창
-        #     pass
-        # else:
-        #     try:
-        #         # 다음 질문으로
-        #         question_index = ClassifyPage.getQuestionIndex(self)
-        #         question_index += 1
-        #         ClassifyPage.setQuestionIndex(self, question_index)
-        #         SetUI.SetUI.setPage(self, "classify", question_index)
-        #     except Exception as e:
-        #         print(e)
-
-    def clearPage(self):
-        for i in reversed(range(self.layout().count())):
-            if self.layout().itemAt(i).widget() is not None:
-                self.layout().removeWidget(self.layout().itemAt(i).widget())
-            else:
-                self.layout().removeItem(self.layout().itemAt(i))
+        stackedWidget = ClassifyPage.getStackedWidget(self)
+        page_index = stackedWidget.currentIndex()
+        print(page_index)
+        stackedWidget.setCurrentIndex(page_index + 1)

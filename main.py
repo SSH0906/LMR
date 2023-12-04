@@ -10,7 +10,8 @@ class MainPage(QDialog):
 
     def initUI(self):
         # layout 설정 method 호출
-        SetUI.setPage(self, "main")
+        layout = SetUI.setPage(self, "main")
+        self.setLayout(layout)
 
         # Window 속성 설정 method 호출
         SetUI.setWindow(self, "점메추")
