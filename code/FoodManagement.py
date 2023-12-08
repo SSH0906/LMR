@@ -1,5 +1,4 @@
 import random
-
 from PyQt5.QtWidgets import QMessageBox
 
 # 무작위로 고를 음식이 dictionary로 저장(food_dict)될 배열
@@ -9,7 +8,7 @@ food_table = []
 
 # food_dict의 key 별도 저장
 # sheet의 첫번째 줄을 불러와 해당 값을 food_dict의 key로 사용
-with open("FoodData.csv", 'r', encoding='utf-8-sig') as f:
+with open("data/FoodData.csv", 'r', encoding='utf-8-sig') as f:
     food_dict_keys = [word.strip() for word in f.readline().split(',')]
 
 # 고른 option이 임시로 저장될 배열
@@ -47,7 +46,7 @@ class FoodManagement:
     # FoodData.csv 파일의 모든 음식을 dictionary 형태로 food_table에 저장
     def initFoodTable(self):
         print("food table 초기화")
-        with open("FoodData.csv", 'r', encoding='utf-8-sig') as f:
+        with open("data/FoodData.csv", 'r', encoding='utf-8-sig') as f:
             global food_dict_keys
             f.readline()
             for line in f.readlines():
@@ -80,6 +79,7 @@ class FoodManagement:
         if len(now_selected_options) == 0:
             print("선택된 옵션 없음")
             QMessageBox.about(self, 'Error', '옵션을 1가지 이상 골라주세요!')
+            print(f"ㅡ{food_dict_keys[question_num + 1]} 분류 실패ㅡ\n")
             return False
 
         print(f"선택된 옵션: {now_selected_options}")

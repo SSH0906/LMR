@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QDialog, QWidget
 from ClassifyWindow import ClassifyWindow
-# from RandomPage import RandomPage
+from RandomPage import RandomPage
 import FoodManagement as _FM
 import SetUI as _UI
 
@@ -45,10 +45,9 @@ class ButtonFunction(QDialog):
     def movePage(self, button):
         self.hide()
         if button.text() == "취향 분석 추천":
-            print("취향 분석 추천 window 생성")
             self.second = ClassifyWindow()
-        # elif button.text() == "랜덤 추천":
-        #     self.second = RandomPage()
+        elif button.text() == "랜덤 추천":
+            self.second = RandomPage()
         self.second.exec()
         self.show()
 
@@ -102,3 +101,12 @@ class ButtonFunction(QDialog):
         _FM.FoodManagement.readyClassifying(self, is_first=False)
         print("ㅡ준비 완료ㅡ\n")
         stackedWidget.setCurrentIndex(0)
+
+    # draw 버튼이 눌리면 실행될 method
+    # (랜덤한 음식을 뽑은)결과 페이지를 하나 더 만들고 현재 페이지를 지워 화면이 교체되도록 함
+    def redraw(self):
+        stackedWidget = RandomPage.getStackedWidget(self)
+        page = QWidget()
+        page.setLayout(_UI.SetUI.setParentVbox(self, "random"))
+        stackedWidget.addWidget(page)
+        stackedWidget.removeWidget(stackedWidget.currentWidget())

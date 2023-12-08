@@ -2,7 +2,7 @@ import sys
 from SetUI import *
 
 
-# 메인 창 클래스
+# 메인 window 클래스
 # "점심 메뉴 추천" label 아래로 "취향 분석 추천", "랜덤 추천" (next)버튼을 배치한 window
 class MainWindow(QDialog):
     def __init__(self, parent=None):

@@ -3,7 +3,7 @@ import FoodManagement as _FM
 import SetUI as _UI
 
 
-# 취향 분석 추천 창 클래스
+# 취향 분석 추천 window 클래스
 # n개의 질문과 결과를 stackedWidget으로 구성
 # 사용자 선택값을 받아 실시간으로 분류, 테이블을 구성함
 # 결과적으로 조건에 맞는 n개의 음식을 추천 한다
@@ -34,7 +34,7 @@ class ClassifyWindow(QDialog):
         self.show()
 
     # stackedWidget 페이지 생성 method
-    # 질문 개수 + 2(분류 성공, 실패 페이지)만큼 페이지 stack
+    # 질문 개수 + 1(분류 실패 페이지)만큼 페이지 stack
     def makeStackedWidgetPage(self):
         # stackedWidget 생성
         self.stackedWidget = QStackedWidget()
@@ -45,11 +45,6 @@ class ClassifyWindow(QDialog):
             page = QWidget()
             page.setLayout(_UI.SetUI.setParentVbox(self, "classify", self.question_index))
             self.stackedWidget.addWidget(page)
-
-        # 분류 성공 페이지 생성 및 적용
-        # page = QWidget()
-        # page.setLayout(_UI.SetUI.setParentVbox(self, "classify_success"))
-        # self.stackedWidget.addWidget(page)
 
         # 분류 실패 페이지 생성 및 적용
         page = QWidget()

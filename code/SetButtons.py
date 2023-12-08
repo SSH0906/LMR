@@ -62,6 +62,21 @@ class QPushButtonAgain(QPushButton):
                            "border-radius: 5px;")
 
 
+# draw 버튼 스타일 지정 클래스
+# draw button: 맑은 고딕, 13pt, bold, rgb(131, 56, 236)
+class QPushButtonDraw(QPushButton):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        font = QFont("맑은 고딕", 13)
+        font.setBold(True)
+        self.setFont(font)
+        self.setStyleSheet("color: rgb(131, 56, 236);"
+                           "background-color: white;"
+                           "border: 2px solid rgb(131, 56, 236);"
+                           "border-radius: 5px;")
+
+
 # 버튼 생성 클래스
 # 프로젝트에서 사용될 모든 버튼 set method를 가짐
 class MakeButton(QDialog):
@@ -112,4 +127,16 @@ class MakeButton(QDialog):
 
         # 버튼을 누르면 reclassify 호출
         button.clicked.connect(lambda: ButtonFunction.reclassify(self))
+        return button
+
+    # draw 버튼 생성 method
+    # 클릭 시 redraw 호출
+    def setDrawButton(self, button_text):
+        # 버튼 생성
+        button = QPushButtonDraw(self)
+        button.setText(button_text)
+        button.setCheckable(True)
+
+        # 버튼을 누르면 redraw 호출
+        button.clicked.connect(lambda: ButtonFunction.redraw(self))
         return button
