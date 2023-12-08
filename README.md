@@ -1,12 +1,5 @@
-# LMR
-Open Source Software Term Project:
+# LMR - 점심 메뉴 추천
 
-Lunch Menu Recommendation - LMR (점심 메뉴 추천 - 점메추)
+## 제작 계기
+저는 하루에 한 번 '오늘 뭐 먹지'라는 생각을 하곤 합니다. 그런 생각을 하게 되는 때는 주로 아침을 굶고 난 점심 시간이고, 와닿는 음식은 좀처럼 떠오르질 않아 항상 오전 11시 전후로 친구에게 "점메추"(점심 메뉴 추천)라고 하며 추천을 부탁했습니다. 하지만 친구들은 갈수록 그런 저에게 지쳐 늘 비슷한 메뉴를 추천해주거나, 음식 취향이 너무 달라 다른 걸 추천해달라고 몇 번이고 되묻는 상황이 자주 발생했습니다.
 
-A program that recommends menus that satisfy various conditions.
-
-I make it for myself every time, feeling sorry for leaving the recommendation to a friend.
-
-각종 조건을 만족하는 메뉴를 추천해주는 프로그램.
-
-매번 친구에게 추천을 맡겼던 것에 미안함을 느끼며 스스로를 위해 만듭니다.
