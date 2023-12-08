@@ -9,6 +9,7 @@
 본 프로그램은 2가지 추천 방식을 제공합니다.
 
 - 메인 화면
+
   <img src="https://github.com/SSH0906/LMR/assets/144331414/2c8ee7df-5f78-49b4-8f65-42baaa56dd54">
 
 ### 취향 분석 추천
