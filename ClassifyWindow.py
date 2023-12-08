@@ -5,7 +5,7 @@ import SetUI as _UI
 
 # 취향 분석 추천 창 클래스
 # n개의 질문과 결과를 stackedWidget으로 구성
-# 랜덤값 또는 사용자 선택값을 받아 실시간으로 분류, 테이블을 구성함
+# 사용자 선택값을 받아 실시간으로 분류, 테이블을 구성함
 # 결과적으로 조건에 맞는 n개의 음식을 추천 한다
 class ClassifyWindow(QDialog):
     def __init__(self, parent=None):
@@ -63,6 +63,3 @@ class ClassifyWindow(QDialog):
     # 현재 몇 페이지에 있는지(몇 번째 질문인지) 알 수 있게 하기 위함
     def getStackedWidget(self):
         return self.stackedWidget
-
-    def setStackedWidget(self, stackedWidget):
-        self.stackedWidget = stackedWidget

@@ -1,8 +1,10 @@
 import random
 
+from PyQt5.QtWidgets import QMessageBox
+
 # 무작위로 고를 음식이 dictionary로 저장(food_dict)될 배열
-# dictionary: {"음식 이름": _, "가격": _, "음식 계열": _, "주재료": _, "부재료": _, "매운 정도": _, "온도": _}
-# 선호도(가중치), 비고는 보류...
+# dictionary: {"음식 이름": _, "가격": _, "음식 계열": _, "주재료": _, "부재료": _, "매운 정도": _, "온도": _, "선호도": _, "비고": _}
+# "선호도"(가중치), "비고" 사용 보류
 food_table = []
 
 # food_dict의 key 별도 저장
@@ -58,7 +60,8 @@ class FoodManagement:
 
     # food_table을 수정하는 method
     # now_selected_options을 기반으로 option에 맞지 않는 음식은 food_table에서 삭제
-    # now_selected_options를 비움
+    # 만약 now_selected_options가 비어있다면 경고창을 띄우며 False 반환
+    # now_selected_options가 비어있지 않아 정상적으로 분류했다면 True 반환
     def alterFoodTable(self, question_num):
         global food_table, food_dict_keys, now_selected_options, selected_options
         prev_num = len(food_table)
@@ -72,6 +75,12 @@ class FoodManagement:
             selected_options[question_num] = now_selected_options
         elif len(selected_options) == question_num:
             selected_options.append(now_selected_options)
+
+        # now_selected_options가 비어있으면 옵션을 받지 못했으므로 False를 반환
+        if len(now_selected_options) == 0:
+            print("선택된 옵션 없음")
+            QMessageBox.about(self, 'Error', '옵션을 1가지 이상 골라주세요!')
+            return False
 
         print(f"선택된 옵션: {now_selected_options}")
 
@@ -96,6 +105,7 @@ class FoodManagement:
         now_selected_options = []
 
         print(f"ㅡ{food_dict_keys[question_num + 1]} 분류 완료ㅡ\n")
+        return True
 
     # 가격 분류 method
     def comparePrice(self):
@@ -161,8 +171,15 @@ class FoodManagement:
         food_table = [food_dict for food_dict in food_table
                       if food_dict["온도"] in options]
 
+    # 음식 랜덤 뽑기 method
     def selectRandomFood(self):
         global food_table
+        print("ㅡ음식 랜덤 뽑기ㅡ")
+        print("! 음식 리스트")
+        for food in food_table:
+            print(food["음식 이름"])
+        print("ㅡ")
         random_index = random.randint(0, len(food_table) - 1)
-        print(food_table)
+        print(f"! 뽑은 음식: {food_table[random_index]['음식 이름']}")
+        print("ㅡ랜덤 뽑기 완료ㅡ\n")
         return food_table[random_index]["음식 이름"]

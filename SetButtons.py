@@ -32,20 +32,6 @@ class QPushButtonNext(QPushButton):
                            "border-radius: 5px;")
 
 
-# random 버튼 스타일 지정 클래스
-# random button: 맑은 고딕, 13pt, rgb(131, 56, 236)
-class QPushButtonRandom(QPushButton):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        font = QFont("맑은 고딕", 13)
-        self.setFont(font)
-        self.setStyleSheet("color: rgb(131, 56, 236);"
-                           "background-color: white;"
-                           "border: 2px solid rgb(131, 56, 236);"
-                           "border-radius: 5px;")
-
-
 # proceed 버튼 스타일 지정 클래스
 # proceed button: 맑은 고딕, 13pt, bold, rgb(58, 134, 255)
 class QPushButtonProceed(QPushButton):
@@ -102,18 +88,6 @@ class MakeButton(QDialog):
 
         # 버튼을 누르면 movePage method 호출
         button.clicked.connect(lambda: ButtonFunction.movePage(self, button))
-        return button
-
-    # random 버튼 생성 method
-    # 클릭 시 randomOption 호출
-    def setRandomButton(self, button_text):
-        # 버튼 생성
-        button = QPushButtonRandom(self)
-        button.setText(button_text)
-        button.setCheckable(True)
-
-        # 버튼을 누르면 randomOption 호출
-        button.clicked.connect(lambda: ButtonFunction.randomOption(self, button))
         return button
 
     # proceed 버튼 생성 method

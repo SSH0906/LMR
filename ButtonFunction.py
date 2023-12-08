@@ -3,7 +3,6 @@ from ClassifyWindow import ClassifyWindow
 # from RandomPage import RandomPage
 import FoodManagement as _FM
 import SetUI as _UI
-import random
 
 
 # 버튼 function 클래스
@@ -53,68 +52,53 @@ class ButtonFunction(QDialog):
         self.second.exec()
         self.show()
 
-    # random 버튼이 눌리면 실행될 method
-    # todo: 무작위로 선택된 option을 text 키워드에 저장, 선택된 option button은 스타일 변경
-    # 사용 보류
-    def randomOption(self, button):
-        if button.isChecked():
-            # random_option = random.choice(ClassifyWindow.getQOption(self))
-            # print(random_option)
-            button.setCheckable(False)
-            button.setStyleSheet("color: white;"
-                                 "background-color: rgb(131, 56, 236);"
-                                 "border-radius: 5px;")
-        else:
-            button.setCheckable(True)
-            button.setStyleSheet("color: rgb(131, 56, 236);"
-                                 "background-color: white;"
-                                 "border: 2px solid rgb(131, 56, 236);"
-                                 "border-radius: 5px;")
-
     # proceed 버튼이 눌리면 실행될 method
-    # TODO: now_selected_options가 비어있다면 경고창을 띄워야 함
     # alterFoodTable method를 호출하여 food_table을 option에 따라 분류함
-    # food_table이 비어있지 않다면 current index를 증가시켜 다음 page로 넘어감
-    # food_table이 비었다면 분류 중단, 마지막 page로 이동함
+    # food_table이 비어있지 않다면 current index를 증가시켜 다음 page로, 비었다면 분류 중단 후 마지막 page로 이동
     def progressQuestion(self, button_text):
         # 예산을 묻는 (첫번째)질문이면 progress 버튼이 눌렸으므로 배열에 option이 저장되지 않음
         # option을 별도로 저장함
         if button_text != "다음" and button_text != "결과 보기":
             _FM.now_selected_options.append(button_text)
 
-        # current index를 가져옴
+        # alterFoodTable method를 호출, food_table을 option에 따라 분류
         stackedWidget = ClassifyWindow.getStackedWidget(self)
         page_index = stackedWidget.currentIndex()
+        is_valid = _FM.FoodManagement.alterFoodTable(self, question_num=page_index)
 
-        # alterFoodTable method를 호출, food_table을 option에 따라 분류
-        _FM.FoodManagement.alterFoodTable(self, question_num=page_index)
+        # option을 고르지 않은 경우 method 종료
+        if not is_valid:
+            return
 
         # food_table이 비어있지 않다면
         if len(_FM.food_table) != 0:
-            # 눌린 버튼이 "결과 보기"라면 결과 page 생성 및 적용
+            # 눌린 버튼이 "결과 보기"라면 결과 page 생성 및 적용, page_index + 1 하여 분류 실패 page 스킵
             if button_text == "결과 보기":
                 page = QWidget()
                 page.setLayout(_UI.SetUI.setParentVbox(self, "classify_success"))
-                print(stackedWidget.count())
                 stackedWidget.addWidget(page)
-                print(stackedWidget.count())
-                ClassifyWindow.setStackedWidget(self, stackedWidget)
-                stackedWidget = ClassifyWindow.getStackedWidget(self)
-                print(stackedWidget)
+                page_index += 1
+
             # current index를 증가시켜 다음 page로 넘어감
             stackedWidget.setCurrentIndex(page_index + 1)
 
-        # food_table이 비었다면 분류 중단, 분류 실패 페이지로 이동
+        # food_table이 비었다면
         else:
-            page_index = stackedWidget.count()
-            stackedWidget.setCurrentIndex(page_index - 1)
+            # 분류 중단, 분류 실패 페이지로 이동
+            max_page = stackedWidget.count()
+            stackedWidget.setCurrentIndex(max_page - 1)
 
     # again 버튼이 눌리면 실행될 method
     # 재분류 준비 후 classifyWindow의 첫 page로 이동
     def reclassify(self):
+        stackedWidget = ClassifyWindow.getStackedWidget(self)
+
+        # food_table이 비어있지 않다면 분류 성공 후 "다시하기" 버튼이 눌린 것이므로 결과(현재) page 삭제
+        if len(_FM.food_table) != 0:
+            stackedWidget.removeWidget(stackedWidget.currentWidget())
+
         print("ㅡ분류 준비ㅡ")
         _FM.selected_options[0] = []
         _FM.FoodManagement.readyClassifying(self, is_first=False)
         print("ㅡ준비 완료ㅡ\n")
-        stackedWidget = ClassifyWindow.getStackedWidget(self)
         stackedWidget.setCurrentIndex(0)

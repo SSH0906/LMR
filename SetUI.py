@@ -61,8 +61,8 @@ class SetUI(QDialog):
                 else:
                     vbox = SetUI.stackOptionButtons(self, vbox, button_texts)
 
-                # 공통(랜덤, 다음) 버튼 배치
-                # 마지막 질문이면 "다음" 버튼을 "결과 보기" 버튼으로
+                # 공통(다음) 버튼 배치
+                # 마지막 질문이면 "다음" 버튼 text를 "결과 보기" 버튼으로 변경
                 if question_index == len(button_dict):
                     vbox = SetUI.classifyDefaultButtons(self, vbox, is_last=True)
                 else:
@@ -70,10 +70,10 @@ class SetUI(QDialog):
 
         # classify window - success page layout 설정
         elif dict_key == "classify_success":
-            # todo: label에 추천 음식 추가해야됨
+            # label에 추천 음식 추가
             random_food = _FM.FoodManagement.selectRandomFood(self)
-            label_dict[dict_key] += f"\n[{random_food}]\n어때요?"
-            vbox = SetUI.setLabel(self, label_dict[dict_key])
+            label = label_dict[dict_key] + f"\n[{random_food}]\n어때요?"
+            vbox = SetUI.setLabel(self, label)
             vbox = SetUI.classifyResultButtons(self, vbox, button_dict[dict_key])
 
         # classify window - fail page layout 설정
@@ -145,15 +145,12 @@ class SetUI(QDialog):
         return vbox
 
     # classify window 두번째 page부터 공통으로 나타낼 버튼 배치하는 method
-    # "랜덤"(random), "다음"(proceed) 버튼 배치
+    # 마지막 질문이면 "결과 보기" 버튼, 이외엔 "다음" (proceed)버튼 배치
     def classifyDefaultButtons(self, vbox, is_last):
-        hbox = QHBoxLayout()
-        # hbox.addWidget(MakeButton.setRandomButton(self, "랜덤"))
         if is_last:
-            hbox.addWidget(MakeButton.setProceedButton(self, "결과 보기"))
+            vbox.addWidget(MakeButton.setProceedButton(self, "결과 보기"))
         else:
-            hbox.addWidget(MakeButton.setProceedButton(self, "다음"))
-        vbox.addLayout(hbox)
+            vbox.addWidget(MakeButton.setProceedButton(self, "다음"))
         return vbox
 
     # classify window 결과(fail, success) page에 나타낼 버튼 배치하는 method
