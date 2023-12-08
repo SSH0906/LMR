@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QDialog, QWidget
 from ClassifyWindow import ClassifyWindow
-from RandomPage import RandomPage
+from RandomWindow import RandomPage
 import FoodManagement as _FM
 import SetUI as _UI
 
